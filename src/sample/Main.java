@@ -22,18 +22,25 @@ public class Main extends Application {
         window = primaryStage;
         window.setTitle("Nevastuica Rock");
 
-        button = new Button("Click Me");
-        button.setOnAction(e -> {
-            boolean result = ConfirmBox.display("Title", "Are you sure?");
-            System.out.println(result);
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
         });
 
+        button = new Button("Close Program");
+        button.setOnAction(e -> closeProgram());
         StackPane layout = new StackPane();
         layout.getChildren().add(button);
 
         Scene scene = new Scene(layout, 300, 250);
         window.setScene(scene);
         window.show();
+    }
+
+    private void closeProgram(){
+        Boolean answer = ConfirmBox.display("Title","Are you sure you want to exit?");
+        if(answer)
+            window.close();
     }
 
     public static void main(String[] args) {
