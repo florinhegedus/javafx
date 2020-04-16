@@ -23,7 +23,10 @@ public class Main extends Application {
         window.setTitle("Nevastuica Rock");
 
         button = new Button("Click Me");
-        button.setOnAction(e -> Alert.display("Title of the windows", "so cool"));
+        button.setOnAction(e -> {
+            boolean result = ConfirmBox.display("Title", "Are you sure?");
+            System.out.println(result);
+        });
 
         StackPane layout = new StackPane();
         layout.getChildren().add(button);
