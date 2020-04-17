@@ -25,50 +25,51 @@ import java.util.Stack;
 public class Main extends Application {
 
     Stage window;
-    Scene scene;
-    TableView<Product> table;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         window.setTitle("MEA");
 
-        //Name column
-        TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setMinWidth(200);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        //GridPane with 10px padding around edge
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10,10,10,10));
+        grid.setVgap(8);
+        grid.setHgap(10);
 
-        //Price column
-        TableColumn<Product, Double> priceColumn = new TableColumn<>("Price");
-        priceColumn.setMinWidth(100);
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        //Name Label - constraints use (child, column, row)
+        Label nameLabel = new Label("Username: ");
+        nameLabel.setId("bold-label");
+        GridPane.setConstraints(nameLabel,0,0);
 
-        //Quantity column
-        TableColumn<Product, String> quantityColumn = new TableColumn<>("Quantity");
-        quantityColumn.setMinWidth(100);
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        //Name Input
+        TextField nameInput = new TextField("Bucky");
+        GridPane.setConstraints(nameInput, 1, 0);
 
-        table = new TableView<>();
-        table.setItems(getProduct());
-        table.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
+        //Password label
+        Label passLabel = new Label("Password: ");
+        GridPane.setConstraints(passLabel, 0, 1);
 
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(table);
+        //Password Input
+        TextField passInput = new TextField();
+        passInput.setPromptText("password");
+        GridPane.setConstraints(passInput,1,1);
 
-        scene= new Scene(vBox);
+        //Login
+        Button loginButton = new Button("Log In");
+        GridPane.setConstraints(loginButton,1,2);
+
+        //Sign up
+        Button signUpButton = new Button("Sign Up");
+        signUpButton.getStyleClass().add("button-blue");
+        GridPane.setConstraints(signUpButton, 1, 3);
+
+        grid.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, loginButton, signUpButton);
+
+        Scene scene= new Scene(grid, 300, 200);
+        scene.getStylesheets().add("sample/viper.css");
         window.setScene(scene);
         window.show();
-    }
-
-    //Get all of the products
-    public ObservableList<Product> getProduct(){
-        ObservableList<Product> products = FXCollections.observableArrayList();
-        products.add(new Product("Laptop", 1999.99, 20));
-        products.add(new Product("TV", 2449.75, 30));
-        products.add(new Product("Headphone", 301.43, 50));
-        products.add(new Product("Amplifier", 1000.00, 15));
-        products.add(new Product("XBox One", 2000.01, 20));
-        return products;
     }
 
     public static void main(String[] args) {
