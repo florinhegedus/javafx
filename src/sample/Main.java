@@ -23,6 +23,7 @@ public class Main extends Application {
     Stage window;
     Scene scene;
     Button button;
+    ComboBox<String> comboBox;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -32,28 +33,28 @@ public class Main extends Application {
         //Button
         button = new Button("Order Now");
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+        comboBox = new ComboBox<>();
+        comboBox.getItems().addAll("Good Will Hunting", "St. Vincent", "Blackhat");
+        comboBox.setPromptText("What is your favorite movie? ");
+        comboBox.setEditable(true);
 
-        //getItems returns the ObservableList object which you can add item to
-        choiceBox.getItems().add("Apples");
-        choiceBox.getItems().add("Bananas");
-        choiceBox.getItems().addAll("Bacon", "Ham", "Meatballs");
-        choiceBox.setValue("Apples");
+        button.setOnAction(e -> printMovie());
 
-        //Listen for selection changes
-        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> System.out.println(newValue));
+        comboBox.setOnAction(e -> System.out.println("User selected " + comboBox.getValue()));
 
         //Layout
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20,20,20,20));
-        layout.getChildren().addAll(choiceBox, button);
+        layout.getChildren().addAll(comboBox, button);
 
         scene= new Scene(layout, 300, 250);
         window.setScene(scene);
         window.show();
     }
 
-
+    private void printMovie(){
+        System.out.println(comboBox.getValue());
+    }
 
     public static void main(String[] args) {
         launch(args);
