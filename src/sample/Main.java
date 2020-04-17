@@ -40,23 +40,20 @@ public class Main extends Application {
         choiceBox.getItems().addAll("Bacon", "Ham", "Meatballs");
         choiceBox.setValue("Apples");
 
-        button.setOnAction( e -> getChoice(choiceBox));
+        //Listen for selection changes
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> System.out.println(newValue));
 
         //Layout
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20,20,20,20));
         layout.getChildren().addAll(choiceBox, button);
-        layout.setStyle("-fx-background-color: #012345;");
 
         scene= new Scene(layout, 300, 250);
         window.setScene(scene);
         window.show();
     }
 
-    private void getChoice(ChoiceBox<String> choiceBox){
-        String food = choiceBox.getValue();
-        System.out.println(food);
-    }
+
 
     public static void main(String[] args) {
         launch(args);
